@@ -2,9 +2,9 @@
 //
 // The page is prerendered with kanso-ui, as kansolabs.org is, but nothing on it
 // needs React in the browser: its two scripts, analytics.js, from
-// kansolabs.org, and privacy.js, are plain. React Router's client scripts come out, because its router matches
-// the address the page is served at, and would draw nothing it knew on the
-// claude.ai preview's path. Every address left is made relative, so the folder
+// kansolabs.org, and privacy.js, are plain. React Router's client scripts come
+// out, because its router matches the address the page is served at, and would
+// draw nothing it knew on the claude.ai preview's path. Every address left is made relative, so the folder
 // works wherever it is served from.
 //
 // With --preview it writes brand-preview.html instead: _site/index.html with
