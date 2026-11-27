@@ -127,9 +127,11 @@ favicons use it; every larger icon uses the regular mark.
 `#000000` for print, and reversed is `#ffffff`. The page's own dark scheme sets
 words in `#ececec`, but the logo stays white.
 
-**The Play header and the social card are RGB without alpha**, because the Play
-Console refuses a header with an alpha channel. `render.mjs` re-encodes those
-two itself, since resvg writes only RGBA.
+**The Play header and every social image on a ground of its own are RGB without
+alpha**: the cards, the GitHub social preview, the OAuth logo and the banners.
+The Play Console refuses a header with an alpha channel, and the others have
+nothing to show through. `render.mjs` re-encodes each image marked
+`alpha: false` itself, since resvg writes only RGBA.
 
 **`npm run build` checks every contrast pair the page lists** against WCAG AA
 and fails on one that falls short, so a palette change that breaks one cannot be
