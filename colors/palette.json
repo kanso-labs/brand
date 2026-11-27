@@ -1,0 +1,137 @@
+{
+  "$description": "Kanso Labs' brand colours, in the Design Tokens Community Group format. The mark is ink on paper and has no hue, so the palette is ink, paper and the greys between them. Each colour's kanso-ui token is the one kansolabs.org sets it on, in app/styles/theme.css of kanso-labs/kanso-labs.github.io; light and dark name the colour scheme.",
+  "color": {
+    "$type": "color",
+    "core": {
+      "black": {
+        "$description": "The one-colour logo, for print and single-colour processes. Not a text colour on screen: use ink.",
+        "$value": "#000000"
+      },
+      "ink": {
+        "$description": "The logo and every word on a light ground. The brand's one colour.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "light": [
+              "--kui-color-on-background",
+              "--kui-color-on-primary-container",
+              "--kui-color-on-surface",
+              "--kui-color-primary"
+            ]
+          }
+        },
+        "$value": "#1a1a1a"
+      },
+      "inkDark": {
+        "$description": "Ink in the dark scheme: words on night. The reversed logo stays white.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "dark": [
+              "--kui-color-on-background",
+              "--kui-color-on-surface",
+              "--kui-color-primary"
+            ]
+          }
+        },
+        "$value": "#ececec"
+      },
+      "night": {
+        "$description": "The ground in the dark scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "dark": ["--kui-color-background", "--kui-color-surface"]
+          }
+        },
+        "$value": "#121212"
+      },
+      "paper": {
+        "$description": "The ground in the light scheme. A touch off white, so white cards lift from it.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "light": ["--kui-color-background", "--kui-color-surface"]
+          }
+        },
+        "$value": "#fafafa"
+      },
+      "white": {
+        "$description": "Cards and icon tiles on paper, and the reversed logo.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "light": [
+              "--kui-color-on-primary",
+              "--kui-color-surface-container-lowest"
+            ]
+          }
+        },
+        "$value": "#ffffff"
+      }
+    },
+    "support": {
+      "container": {
+        "$description": "Filled containers and selected states, light scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "light": [
+              "--kui-color-primary-container",
+              "--kui-color-surface-container-high"
+            ]
+          }
+        },
+        "$value": "#e9e9e9"
+      },
+      "containerDark": {
+        "$description": "Filled containers and selected states, dark scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": {
+            "dark": [
+              "--kui-color-primary-container",
+              "--kui-color-surface-variant"
+            ]
+          }
+        },
+        "$value": "#2b2b2b"
+      },
+      "divider": {
+        "$description": "Hairlines and dividers that carry no meaning, light scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": { "light": ["--kui-color-outline-variant"] }
+        },
+        "$value": "#dcdcdc"
+      },
+      "dividerDark": {
+        "$description": "Hairlines and dividers that carry no meaning, dark scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": { "dark": ["--kui-color-outline-variant"] }
+        },
+        "$value": "#3a3a3a"
+      },
+      "muted": {
+        "$description": "Secondary words: captions, metadata, the lede. Light scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": { "light": ["--kui-color-on-surface-variant"] }
+        },
+        "$value": "#5c5c5c"
+      },
+      "mutedDark": {
+        "$description": "Secondary words, dark scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": { "dark": ["--kui-color-on-surface-variant"] }
+        },
+        "$value": "#b3b3b3"
+      },
+      "outline": {
+        "$description": "The border of a control, which needs 3:1. Light scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": { "light": ["--kui-color-outline"] }
+        },
+        "$value": "#8a8a8a"
+      },
+      "outlineDark": {
+        "$description": "The border of a control, dark scheme.",
+        "$extensions": {
+          "org.kansolabs.kui": { "dark": ["--kui-color-outline"] }
+        },
+        "$value": "#8c8c8c"
+      }
+    }
+  }
+}

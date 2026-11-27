@@ -1,0 +1,13 @@
+# Text files are stored with LF endings, so a checkout on Windows does not
+# rewrite them.
+* text=auto eol=lf
+
+# Binaries: no diffs, no line-ending conversion.
+*.ico binary
+*.png binary
+*.woff2 binary
+*.zip binary
+
+# The SVG masters are text, but each is a few long generated paths, so a diff
+# of one says nothing useful. Review them by eye on the brand page.
+*.svg -diff linguist-generated

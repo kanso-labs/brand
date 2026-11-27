@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# What React Router builds and generates, and what npm run build and npm run
+# preview write from it
+build/
+.react-router/
+_site/
+brand-preview.html
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Claude Code
+.claude/worktrees/
+.context/

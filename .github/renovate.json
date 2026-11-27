@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "local>kanso-labs/.github:renovate-config is the organization's shared preset, listed last because a later preset wins a conflict with an earlier one. config:best-practices is not extended, because its helpers:pinGitHubActionDigests contradicts the convention that actions are pinned to exact release tags, and neither is security:minimumReleaseAgeNpm, because no kanso-labs repository waits out a release age.",
+  "extends": ["config:recommended", "local>kanso-labs/.github:renovate-config"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "groupName": "commitlint",
+      "matchPackageNames": ["@commitlint/**"]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+name: Lint
+
+on:
+  # `edited` is not one of the default activity types. Without it a title
+  # corrected at review time leaves the stale result standing.
+  pull_request:
+    types:
+      - edited
+      - opened
+      - reopened
+      - synchronize
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      # Before the install, so a broken workflow fails in seconds.
+      - name: Run actionlint
+        uses: kanso-labs/actions/lint-workflows@v4.7.0
+
+      - name: Set up Node
+        uses: kanso-labs/actions/setup-node@v4.7.0
+        with:
+          ignore-scripts: true
+
+      - name: Run lint
+        run: npm run lint
+
+      # Every SVG master and PNG is built from source/, so composing and
+      # rendering again must change nothing. A drawing edited without its
+      # outputs, or an output edited by hand, fails here.
+      - name: Check the assets match their sources
+        run: |
+          npm run compose
+          npm run render
+          git add --intent-to-add --all
+          git diff --exit-code --stat
+
+      # Pull requests are squash-merged with their title as the commit subject,
+      # so the title is the one line that reaches main. It goes through `env`
+      # rather than `${{ }}`, which would interpolate it into the script.
+      - name: Check the pull request title
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s' "$PR_TITLE" | npx commitlint

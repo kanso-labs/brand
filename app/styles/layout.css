@@ -1,0 +1,592 @@
+/* The page's own CSS: the rhythm between its regions, the grids, and the
+ * grounds the assets are shown on. kanso-ui's Container, Stack, Card and Text
+ * carry the measure, the gutters, the gaps and the type. kanso-ui's styles sit
+ * in cascade layers, so these unlayered rules win without raising their
+ * specificity.
+ *
+ * Every colour is a kanso-ui token, so it follows the scheme, whether the OS
+ * or data-theme on <html> chose it. The only literal colours are content: the
+ * grounds each asset is drawn for (paper, white, night) and the swatches. No
+ * text sits on those grounds; every caption is on its card, in tokens. */
+
+html {
+  scroll-behavior: smooth;
+  /* Anchors land below the sticky header. */
+  scroll-padding-block-start: 88px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--kui-color-surface);
+  color: var(--kui-color-on-surface);
+  font-family: var(--kui-typography-font-family-plain);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-inline-size: 100%;
+}
+
+.visually-hidden {
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.skip-link {
+  background: var(--kui-color-primary);
+  border-radius: var(--kui-radius-sm);
+  color: var(--kui-color-on-primary);
+  inset-block-start: var(--kui-spacing-sm);
+  inset-inline-start: var(--kui-spacing-sm);
+  padding: var(--kui-spacing-sm) var(--kui-spacing-lg);
+  position: absolute;
+  transform: translateY(-200%);
+  z-index: 20;
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* The logo, drawn inline in currentColor ------------------------------------ */
+
+.logo {
+  color: var(--kui-color-on-surface);
+  display: inline-block;
+  line-height: 0;
+}
+
+.logo svg {
+  block-size: 100%;
+  display: block;
+  inline-size: auto;
+}
+
+/* Header: sticky, with the section links ------------------------------------- */
+
+.site-header {
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--kui-color-surface) 92%, transparent);
+  border-block-end: 1px solid var(--kui-color-outline-variant);
+  inset-block-start: 0;
+  position: sticky;
+  z-index: 5;
+}
+
+.site-header__row {
+  align-items: center;
+  display: flex;
+  gap: var(--kui-spacing-lg);
+  justify-content: space-between;
+  min-block-size: 64px;
+}
+
+.site-header__home {
+  border-radius: var(--kui-radius-xs);
+  flex: none;
+}
+
+.site-header__home .logo {
+  block-size: 22px;
+}
+
+/* The links scroll within their own row when they do not fit, so the page
+ * itself never scrolls sideways. */
+.site-nav {
+  display: flex;
+  gap: 2px;
+  min-inline-size: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.site-nav > * {
+  flex: none;
+  white-space: nowrap;
+}
+
+.site-nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* A phone has room for the mark and the links on two rows. */
+@media (max-width: 839px) {
+  .site-header__row {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    padding-block-start: var(--kui-spacing-md);
+  }
+
+  .site-nav {
+    margin-inline: -8px;
+    padding-block: var(--kui-spacing-xs);
+  }
+
+  html {
+    scroll-padding-block-start: 112px;
+  }
+}
+
+/* Regions ------------------------------------------------------------------- */
+
+.hero {
+  padding-block: clamp(48px, 9vw, 120px) clamp(56px, 8vw, 104px);
+}
+
+.hero__grid {
+  align-items: center;
+  display: grid;
+  gap: 48px 64px;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.hero__mark {
+  display: flex;
+  justify-content: center;
+}
+
+.hero__mark .logo {
+  inline-size: min(100%, 420px);
+}
+
+.hero__mark .logo svg {
+  block-size: auto;
+  inline-size: 100%;
+}
+
+@media (max-width: 839px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero__mark {
+    justify-content: flex-start;
+    order: -1;
+  }
+
+  .hero__mark .logo {
+    inline-size: min(100%, 240px);
+  }
+}
+
+/* One role down on a phone, as on kansolabs.org. */
+@media (max-width: 599px) {
+  .hero__title {
+    font-size: var(--kui-typography-display-small-size);
+    letter-spacing: var(--kui-typography-display-small-tracking);
+    line-height: var(--kui-typography-display-small-line-height);
+  }
+
+  .hero__lede {
+    font-family: var(--kui-typography-body-large-font);
+    font-size: var(--kui-typography-body-large-size);
+    font-weight: var(--kui-typography-body-large-weight);
+    letter-spacing: var(--kui-typography-body-large-tracking);
+    line-height: var(--kui-typography-body-large-line-height);
+  }
+}
+
+.section {
+  border-block-start: 1px solid var(--kui-color-outline-variant);
+  padding-block: clamp(56px, 8vw, 96px);
+}
+
+.section--tinted {
+  background: var(--kui-color-surface-container-low);
+}
+
+.section__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kui-spacing-md);
+}
+
+.measure {
+  max-inline-size: 62ch;
+}
+
+/* A label column beside the content, which wraps under it once there is no
+ * room for both. */
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kui-spacing-xl) 64px;
+}
+
+.split__aside {
+  flex: 1 1 240px;
+  min-inline-size: 0;
+}
+
+.split__main {
+  flex: 999 1 600px;
+  min-inline-size: 0;
+}
+
+.group {
+  border-block-start: 1px solid var(--kui-color-outline-variant);
+  padding-block: var(--kui-spacing-xl) var(--kui-spacing-xxxl);
+}
+
+.group:first-child {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+
+.group__aside {
+  padding-block-start: var(--kui-spacing-sm);
+}
+
+/* Asset cards: a preview on the asset's own ground, then the caption and the
+ * downloads on the card's surface. ------------------------------------------ */
+
+.asset-grid {
+  display: grid;
+  gap: var(--kui-spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+}
+
+.asset-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.asset-grid--two {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+}
+
+.asset {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.asset__preview {
+  align-items: center;
+  block-size: 160px;
+  border-block-end: 1px solid var(--kui-color-outline-variant);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: var(--kui-spacing-xl);
+}
+
+.asset__preview img {
+  block-size: auto;
+  max-block-size: 100%;
+  max-inline-size: 100%;
+  object-fit: contain;
+}
+
+.asset__preview--mark img {
+  max-block-size: 64px;
+}
+
+/* Icons and images with transparency sit on a checkerboard drawn from the
+ * surface tokens, so it reads as "transparent" in either scheme. */
+.asset__preview--checker {
+  background: repeating-conic-gradient(
+      var(--kui-color-surface-container-highest) 0 25%,
+      var(--kui-color-surface-container-low) 0 50%
+    )
+    0 0 / 16px 16px;
+}
+
+.asset__pixel {
+  block-size: 96px;
+  image-rendering: pixelated;
+  inline-size: 96px;
+}
+
+.asset__body {
+  flex: 1;
+  padding: var(--kui-spacing-lg) var(--kui-spacing-lg) var(--kui-spacing-xl);
+}
+
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kui-spacing-xs);
+}
+
+.snippet {
+  max-inline-size: 720px;
+}
+
+.code-block {
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Clear space ---------------------------------------------------------------- */
+
+/* The lockup is drawn on white, its ground; the measure around it is drawn
+ * in a colour chosen for that white, not for the page's scheme. */
+.clear {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--kui-color-outline-variant);
+  border-radius: var(--kui-radius-lg);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: var(--kui-spacing-xxl) var(--kui-spacing-lg);
+}
+
+.clear__box {
+  /* x is the height of the K: 360 units of a 3,692-unit-wide horizontal
+   * lockup, 23 px on the 240 px one shown here. */
+  outline: 1px dashed #8c1d18;
+  padding: 23px;
+  position: relative;
+}
+
+.clear__box img {
+  inline-size: min(240px, 60vw);
+  outline: 1px solid #dcdcdc;
+}
+
+.clear__label {
+  color: #8c1d18;
+  font: 500 12px/1 var(--kui-typography-font-family-mono);
+  inset-block-start: 5px;
+  inset-inline-start: 6px;
+  position: absolute;
+}
+
+/* Tables ---------------------------------------------------------------------- */
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  color: var(--kui-color-on-surface);
+  font-family: var(--kui-typography-body-medium-font);
+  font-size: var(--kui-typography-body-medium-size);
+  inline-size: 100%;
+  letter-spacing: var(--kui-typography-body-medium-tracking);
+  line-height: var(--kui-typography-body-medium-line-height);
+}
+
+.table th,
+.table td {
+  border-block-end: 1px solid var(--kui-color-outline-variant);
+  padding: 12px 16px 12px 0;
+  text-align: start;
+  vertical-align: middle;
+}
+
+.table thead th {
+  border-block-end-color: var(--kui-color-outline);
+  color: var(--kui-color-on-surface-variant);
+  font-weight: 500;
+}
+
+.table tbody th {
+  font-weight: 500;
+}
+
+.table--wide {
+  min-inline-size: 680px;
+}
+
+.table code {
+  white-space: nowrap;
+}
+
+.table-scroll:focus-visible {
+  outline: 2px solid var(--kui-color-primary);
+  outline-offset: 2px;
+}
+
+.table-note {
+  margin-block-start: var(--kui-spacing-lg);
+}
+
+/* A sample of the pair itself, in its own colours: content, not chrome. */
+.pair {
+  border-radius: var(--kui-radius-sm);
+  box-shadow: inset 0 0 0 1px var(--kui-color-outline-variant);
+  display: inline-block;
+  font-weight: 600;
+  min-inline-size: 44px;
+  padding: 4px 10px;
+  text-align: center;
+}
+
+/* A 3:1 pair's sample: a line in the foreground colour, as a border or the
+ * logo's stroke would be. */
+.pair--line {
+  align-items: center;
+  block-size: 30px;
+  box-sizing: border-box;
+  display: inline-flex;
+  padding: 0 8px;
+  vertical-align: middle;
+}
+
+.pair--line::after {
+  background: currentColor;
+  block-size: 3px;
+  border-radius: 2px;
+  content: '';
+  inline-size: 100%;
+}
+
+/* Colour ---------------------------------------------------------------------- */
+
+.swatch-grid {
+  display: grid;
+  gap: var(--kui-spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.swatch__chip {
+  block-size: 104px;
+  border-block-end: 1px solid var(--kui-color-outline-variant);
+}
+
+.token {
+  overflow-wrap: anywhere;
+}
+
+.swatch__body {
+  padding: var(--kui-spacing-lg);
+}
+
+/* Type ------------------------------------------------------------------------ */
+
+.specimen {
+  color: var(--kui-color-on-surface);
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.specimen--brand {
+  font-family: var(--kui-typography-font-family-brand);
+  font-weight: 400;
+}
+
+.specimen--plain {
+  font-family: var(--kui-typography-font-family-plain);
+}
+
+.specimen--mono {
+  font-family: var(--kui-typography-font-family-mono);
+  font-size: 34px;
+}
+
+/* Usage ----------------------------------------------------------------------- */
+
+.rule-grid {
+  display: grid;
+  gap: var(--kui-spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+}
+
+.rule {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rule__preview {
+  align-items: center;
+  block-size: 140px;
+  border-block-end: 1px solid var(--kui-color-outline-variant);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--kui-spacing-xl);
+}
+
+.rule__preview img {
+  max-block-size: 56px;
+  max-inline-size: 100%;
+}
+
+.rule__preview--white {
+  background: #ffffff;
+}
+
+.rule__preview--night {
+  background: #121212;
+}
+
+.rule--stretch img {
+  transform: scale(1.35, 0.7);
+}
+
+.rule--recolour img {
+  filter: invert(28%) sepia(90%) saturate(1800%) hue-rotate(220deg);
+}
+
+.rule--shadow img {
+  filter: drop-shadow(4px 4px 3px rgb(0 0 0 / 0.5));
+}
+
+.rule--rotate img {
+  transform: rotate(-14deg);
+}
+
+.rule--busy {
+  background: repeating-linear-gradient(
+    45deg,
+    #8a8a8a 0 10px,
+    #cfcfcf 10px 20px
+  );
+}
+
+/* The don't of retyping: KANSO set live, too heavy and too tight, on the
+ * rule's white ground. */
+.rule__retyped {
+  color: #1a1a1a;
+  font: 700 30px/1 var(--kui-typography-font-family-brand);
+  letter-spacing: 0.04em;
+}
+
+/* Products -------------------------------------------------------------------- */
+
+.product__mark {
+  block-size: 30px;
+}
+
+/* Footer ---------------------------------------------------------------------- */
+
+.site-footer {
+  border-block-start: 1px solid var(--kui-color-outline-variant);
+  padding-block: 48px;
+}
+
+.site-footer__row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kui-spacing-xl) 48px;
+  justify-content: space-between;
+}
+
+.site-footer__mark {
+  block-size: 28px;
+}
