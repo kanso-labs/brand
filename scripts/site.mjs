@@ -1,8 +1,8 @@
 // Turns React Router's prerendered build into the published site, _site/.
 //
 // The page is prerendered with kanso-ui, as kansolabs.org is, but nothing on it
-// needs React in the browser: its two scripts, analytics.js and privacy.js, are
-// plain. React Router's client scripts come out, because its router matches
+// needs React in the browser: its two scripts, analytics.js, from
+// kansolabs.org, and privacy.js, are plain. React Router's client scripts come out, because its router matches
 // the address the page is served at, and would draw nothing it knew on the
 // claude.ai preview's path. Every address left is made relative, so the folder
 // works wherever it is served from.
@@ -146,9 +146,10 @@ function preview() {
       return `<style>${css}</style>`
     },
   )
-  // Scripts inline, so analytics.js still reads its own data- attributes.
+  // Scripts inline, but for analytics.js, which stays kansolabs.org's and
+  // reads its own data- attributes there.
   html = html.replace(
-    /<script([^>]*) src="([^"]+)"([^>]*)><\/script>/g,
+    /<script([^>]*) src="(?!https?:)([^"]+)"([^>]*)><\/script>/g,
     (_, a, src, b) =>
       `<script${a} src="${dataUri(join(out, src))}"${b}></script>`,
   )
