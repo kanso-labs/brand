@@ -229,6 +229,35 @@ write(
   ),
 )
 
+// Wide images: the horizontal lockup centred on paper, `width` its share of
+// the image's width. Networks crop the edges and lay the avatar over a corner,
+// so the lockup stays well inside the centre.
+function banner(file, w, h, width) {
+  write(
+    file,
+    svg(
+      w,
+      h,
+      `<rect width="${w}" height="${h}" fill="${paper}"/>\n  ${centred('kanso-horizontal', ink, w / 2, h / 2, w * width)}`,
+      { size: [w, h] },
+    ),
+  )
+}
+
+// The og-card's proportion, at the size GitHub asks for.
+banner('social/github-social-preview.svg', 1280, 640, 640 / 1200)
+banner('social/x-banner.svg', 1500, 500, 0.4)
+banner('social/bluesky-banner.svg', 3000, 1000, 0.4)
+banner('social/linkedin-cover.svg', 1128, 191, 0.36)
+banner('social/linkedin-banner.svg', 1584, 396, 0.36)
+
+// Google asks for a square logo of 120 × 120 on the consent screen: the leaf
+// on white, with room around it.
+write(
+  'social/oauth-logo.svg',
+  tile({ ground: '#ffffff', inset: 0.6, mark: 'kanso-mark', size: 120 }),
+)
+
 // The form list is the manifest's; a layout missing here is a mistake.
 for (const form of forms) {
   if (!layouts[form.file]) throw new Error(`No layout for ${form.file}`)
