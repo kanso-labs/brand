@@ -22,7 +22,6 @@ drawings and the page that shows them all at
 | `app/components/logo.tsx`    | The logo drawn inline in currentColor, and Daily's mark                            |
 | `app/styles/theme.css`       | kansolabs.org's palette and type as `--kui-*` tokens, plus `data-theme`            |
 | `app/styles/layout.css`      | The page's own layout and the grounds the assets are shown on                      |
-| `public/analytics.js`        | The shared Google Analytics loader and banner, a copy kept identical               |
 | `public/privacy.js`          | The switch in the page's privacy note                                              |
 | `logo/`, `icons/`, `social/` | The SVG masters and their PNGs: built, then committed                              |
 | `colors/palette.json`        | The palette, in the Design Tokens Community Group format                           |
@@ -161,9 +160,10 @@ relative, so `_site/` works from any folder.
 **A new form, version or icon in `scripts/assets.mjs` appears on the page with
 its downloads**, through `app/brand.ts`, without touching the page.
 
-**The page loads nothing from anywhere else but Google Analytics.** The fonts
-are Fontsource's, bundled into the build, the images are the repository's own,
-and the only scripts are `analytics.js` and `privacy.js`.
+**The page loads nothing from anywhere else but Google Analytics and
+kansolabs.org's `analytics.js`.** The fonts are Fontsource's, bundled into the
+build, the images are the repository's own, and the only scripts are
+`analytics.js` and `privacy.js`.
 
 **How the page was checked**: Playwright and axe-core over `_site/` served from
 a deep path, at 390, 840 and 1440 px, light and dark by `prefers-color-scheme`
@@ -179,20 +179,24 @@ kanso-labs/kanso-labs.github.io#114. The measurement ID, `G-G5J7LFENG0`, is the
 property kansolabs.org and docs.kansolabs.org share; it is public by nature, so
 it sits in the `<script>` tag in `app/root.tsx`.
 
-**`public/analytics.js` is the same file in every Kanso Labs site that loads
-gtag.js itself.** Change one copy and carry the change to the others; never edit
-this one alone. Here it draws its own banner, since the page ships no React to
-draw kansolabs.org's kanso-ui one, and `data-privacy-url="#privacy"` points it
-at the page's privacy note. `public/privacy.js` is the note's switch: it follows
-the `kanso-analytics` event and calls `window.kansoAnalytics.grant()` or
-`deny()`.
+**`analytics.js` is kansolabs.org's, loaded from
+`https://kansolabs.org/analytics.js`**, the one copy every Kanso Labs site that
+loads gtag.js itself loads, kept in kanso-labs/kanso-labs.github.io; change it
+there, never here. If it fails to load, the page has no analytics and no banner,
+and nothing else breaks. Here it draws its own banner, since the page ships no
+React to draw kansolabs.org's kanso-ui one, and `data-privacy-url="#privacy"`
+points it at the page's privacy note. `public/privacy.js` is the note's switch:
+it follows the `kanso-analytics` event and calls `window.kansoAnalytics.grant()`
+or `deny()`.
 
 **Ads signals are denied for everyone; analytics storage is denied in the EEA,
 the UK and Switzerland, where the banner asks first, and granted elsewhere, with
 a notice that offers to opt out.** Whether to ask is decided from the browser's
-time zone. GA's cookies stay on this host, and nothing is sent from a host
-outside kansolabs.org, so `brand-preview.html` and a local `_site/` draw the
-banner but never count.
+time zone. **The visitor answers once for every Kanso Labs site**: the choice is
+the `kl_consent` cookie on `.kansolabs.org`, as kansolabs.org's `AGENTS.md` sets
+out. GA's cookies stay on this host, and nothing is sent from a host outside
+kansolabs.org, so `brand-preview.html` and a local `_site/` draw the banner but
+never count.
 
 **Which events are collected is set in GA, not here.** Enhanced measurement
 records page views, scrolls, outbound clicks and file downloads, which is what

@@ -35,15 +35,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         />
         <Meta />
         <Links />
-        {/* Google Analytics behind Consent Mode. analytics.js is the file
-            every Kanso Labs site that loads gtag.js shares; it loads gtag.js
-            only once the visitor may be counted, and here draws its own
-            banner, since the page ships no React to draw one. */}
+        {/* Google Analytics behind Consent Mode. analytics.js is the one
+            file every Kanso Labs site that loads gtag.js loads from
+            kansolabs.org; it loads gtag.js only once the visitor may be
+            counted, and here draws its own banner, since the page ships no
+            React to draw one. If it fails to load, nothing is counted and
+            nothing else breaks. */}
         <script
           async
           data-measurement-id={MEASUREMENT_ID}
           data-privacy-url="#privacy"
-          src="analytics.js"
+          src="https://kansolabs.org/analytics.js"
         />
       </head>
       <body>

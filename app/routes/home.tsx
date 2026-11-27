@@ -920,8 +920,15 @@ function Privacy() {
               While analytics is on, Google Analytics sets two cookies on this
               site alone, <Code>_ga</Code> and one beginning <Code>_ga_</Code>,
               to tell a returning browser from a new one. Each Kanso Labs site
-              keeps its own, so your choice here applies to this site only. It
-              is kept in your browser’s local storage, and goes nowhere else.
+              keeps its own.
+            </>,
+          )}
+          {p(
+            <>
+              Your choice is shared: it applies to every Kanso Labs site under
+              kansolabs.org, so you answer once. It is kept for 13 months in a
+              cookie on kansolabs.org, <Code>kl_consent</Code>, which your
+              browser sends to Kanso Labs sites alone.
             </>,
           )}
           {h('How long it is kept')}

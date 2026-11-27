@@ -7,8 +7,7 @@
     "LICENSE.md",
     "_site",
     "brand-preview.html",
-    "build",
-    "public/analytics.js"
+    "build"
   ],
   "printWidth": 80,
   "proseWrap": "always",
